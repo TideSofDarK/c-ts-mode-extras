@@ -79,16 +79,6 @@
 (use-package c-ts-mode
   :ensure nil
   :preface
-  (defun c-ts-mode-extras--c-ts-indent-style()
-    `(
-      ((node-is "preproc") column-0 0)
-      ((n-p-gp nil "declaration_list" "namespace_definition") parent-bol 0)
-      ((node-is ")") parent-bol 0)
-      ((match nil "argument_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
-      ((parent-is "argument_list") prev-sibling 0)
-      ((match nil "parameter_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
-      ((parent-is "parameter_list") prev-sibling 0)
-      ,@(alist-get 'bsd (c-ts-mode--indent-styles 'cpp))))
   (defun c-ts-mode-extras--keywords (orig-fun &rest args)
     `("#if" "#ifdef" "#ifndef"
       "#elif" "#else" "#endif" "#define",@(apply orig-fun args)))
@@ -181,9 +171,6 @@
        (identifier) @c-ts-mode-extras-parameter-face
        ")" @font-lock-punctuation-face)))
   :config
-  (setopt c-ts-mode-indent-offset 4)
-  (setopt c-ts-mode-indent-style 'bsd)
-  (setopt c-ts-mode-enable-doxygen t)
   (setopt c-ts-mode--preproc-keywords '("#include"))
   (advice-add 'c-ts-mode--keywords :around #'c-ts-mode-extras--keywords)
 
