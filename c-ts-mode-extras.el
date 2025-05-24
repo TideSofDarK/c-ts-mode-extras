@@ -159,7 +159,7 @@
        function: (field_expression
                   field: (field_identifier) @font-lock-function-call-face))
 
-      (preproc_call directive: (_) @font-lock-keyword-face)
+      (preproc_call directive: (_) @font-lock-preprocessor-face)
       (preproc_defined
        "defined" @font-lock-function-call-face
        "(" @font-lock-punctuation-face
