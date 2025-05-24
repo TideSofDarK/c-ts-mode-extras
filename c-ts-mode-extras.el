@@ -138,6 +138,8 @@
 
       (sizeof_expression "sizeof" @c-ts-mode-extras-named-operator-face)
 
+      ;; (alignas_qualifier alignas ( (identifier) ))
+
       (labeled_statement label: (_) @c-ts-mode-extras-label-face)
       (goto_statement label: (_) @c-ts-mode-extras-label-face)
 
@@ -171,7 +173,7 @@
        (identifier) @c-ts-mode-extras-parameter-face
        ")" @font-lock-punctuation-face)))
   :config
-  (setopt c-ts-mode--preproc-keywords '("#include"))
+  (setopt c-ts-mode--preproc-keywords '("#include" "alignas" "_Alignas"))
   (advice-add 'c-ts-mode--keywords :around #'c-ts-mode-extras--keywords)
 
   (push 'extras (nth 3 c-ts-mode--feature-list))
