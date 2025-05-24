@@ -80,7 +80,8 @@
   :ensure nil
   :preface
   (defun c-ts-mode-extras--keywords (orig-fun &rest args)
-    `("#if" "#ifdef" "#ifndef"
+    `("alignas" "_Alignas"
+      "#if" "#ifdef" "#ifndef"
       "#elif" "#else" "#endif" "#define",@(apply orig-fun args)))
   (defconst c-ts-mode-extras--constants
     `(((field_identifier) @font-lock-constant-face
@@ -138,7 +139,7 @@
 
       (sizeof_expression "sizeof" @c-ts-mode-extras-named-operator-face)
 
-      ;; (alignas_qualifier alignas ( (identifier) ))
+      (alignas_qualifier (identifier) @font-lock-type-face)
 
       (labeled_statement label: (_) @c-ts-mode-extras-label-face)
       (goto_statement label: (_) @c-ts-mode-extras-label-face)
@@ -173,7 +174,7 @@
        (identifier) @c-ts-mode-extras-parameter-face
        ")" @font-lock-punctuation-face)))
   :config
-  (setopt c-ts-mode--preproc-keywords '("#include" "alignas" "_Alignas"))
+  (setopt c-ts-mode--preproc-keywords '("#include"))
   (advice-add 'c-ts-mode--keywords :around #'c-ts-mode-extras--keywords)
 
   (push 'extras (nth 3 c-ts-mode--feature-list))
