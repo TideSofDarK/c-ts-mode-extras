@@ -81,6 +81,7 @@
   :preface
   (defun c-ts-mode-extras--keywords (orig-fun &rest args)
     `("alignas" "_Alignas"
+      "alignof" "_Alignof"
       "#if" "#ifdef" "#ifndef"
       "#elif" "#else" "#endif" "#define",@(apply orig-fun args)))
   (defconst c-ts-mode-extras--constants
