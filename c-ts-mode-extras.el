@@ -79,14 +79,18 @@
 (use-package c-ts-mode
   :ensure nil
   :preface
-  (defun c-ts-mode-extras--keywords (orig-fun &rest args)
-    `("alignas" "_Alignas"
-      "alignof" "_Alignof" ,@(apply orig-fun args)))
+  (defun c-ts-mode-extras--keywords (orig-fun &rest mode)
+    (let ((original-keywords `("alignas" "alignof" ,@(apply orig-fun mode))))
+      (if (eq (car mode) 'c)
+          (append original-keywords `("_Alignas" "_Alignof"))
+        original-keywords)))
+
   (defconst c-ts-mode-extras--constants
     `(((field_identifier) @font-lock-constant-face
        (:match ,c-ts-mode-extras--constant-regex @font-lock-constant-face))
       ((identifier) @font-lock-constant-face
        (:match ,c-ts-mode-extras--constant-regex @font-lock-constant-face))))
+
   (defconst c-ts-mode-extras--common
     `(("." @font-lock-punctuation-face)
 
@@ -137,8 +141,6 @@
       (case_statement value: (identifier) @font-lock-constant-face)
 
       (sizeof_expression "sizeof" @c-ts-mode-extras-named-operator-face)
-
-      (alignas_qualifier (identifier) @font-lock-type-face)
 
       (labeled_statement label: (_) @c-ts-mode-extras-label-face)
       (goto_statement label: (_) @c-ts-mode-extras-label-face)
@@ -331,7 +333,7 @@
              :language 'cpp
              :override t
              :feature 'extras
-             '((declaration
+             `((declaration
                 declarator:
                 (function_declarator
                  declarator: (identifier) @font-lock-function-name-face))
@@ -342,6 +344,7 @@
                ((this) @c-ts-mode-extras-this-face)
 
                (operator_name "[]" @font-lock-operator-face)
+               (operator_name "()" @font-lock-operator-face)
 
                (concept_definition name: (_) @font-lock-type-face)
 
@@ -384,7 +387,8 @@
                (call_expression
                 function: (template_function
                            name: (identifier) @font-lock-function-call-face)))))
-           t)))
+           t)
+          ))
       res))
 
   (defconst c-ts-mode-extras--fontlock-settings-c
