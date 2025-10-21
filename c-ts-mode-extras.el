@@ -299,13 +299,7 @@
                  scope: (namespace_identifier)
                  name: (identifier) @font-lock-type-face))
 
-               (namespace_identifier) @font-lock-type-face
-
-               (qualified_identifier
-                scope: (namespace_identifier)
-                name: (qualified_identifier
-                       scope: (namespace_identifier)
-                       name: (identifier)  @font-lock-type-face)))))
+               (namespace_identifier) @font-lock-type-face)))
            t)
           (add-to-list
            'res
