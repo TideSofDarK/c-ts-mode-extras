@@ -136,7 +136,7 @@
 
       (char_literal "'" @font-lock-string-face)
       (char_literal (character) @font-lock-string-face)
-      (escape_sequence) @c-ts-mode-extras-named-operator-face
+      ;; (escape_sequence) @c-ts-mode-extras-named-operator-face
 
       (case_statement value: (identifier) @font-lock-constant-face)
 
